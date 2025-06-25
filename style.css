@@ -1,69 +1,96 @@
 body {
   font-family: sans-serif;
   background: #e0f7fa;
-  transition: background 0.3s ease, color 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-}
-
-.app {
-  background: white;
-  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  margin: 0;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-input {
-  width: 100%;
-  font-size: 16px;
-  box-sizing: border-box;
-  transition: background 0.3s ease, color 0.3s ease;
-  padding: 10px;
-  margin: 8px 0;
-  align-items: center;
-}
-
-button {
-  width: 100%;
-  font-size: 16px;
-  margin: 8px 0;
-  transition: background 0.3s ease, color 0.3s ease;
-  padding: 10px 20px;
-  background-color: #0288d1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#weatherResult {
-  margin-top: 20px;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 body.dark-mode {
   background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
-  transition: background 0.5s ease;
+  color: white;
+}
+
+.app {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  transition: background 0.3s ease;
 }
 
 body.dark-mode .app {
   background: #1e1e1e;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
+input {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
-body.dark-mode #weatherResult {
+input:focus {
+  outline: none;
+  border: 2px solid #007acc;
+  box-shadow: 0 0 5px rgba(0, 122, 204, 0.6);
+  transition: box-shadow 0.3s ease;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 6px 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #2196f3;
   color: white;
+  font-size: 14px;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #007acc;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.unit-toggle {
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.unit-toggle label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+#weatherResult {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#weatherResult.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #weatherResult img {
@@ -77,29 +104,4 @@ body.dark-mode #weatherResult {
 #weatherResult img.loaded {
   opacity: 1;
   transform: translateY(0);
-}
-
-.unit-toggle {
-  margin: 10px 0;
-  font-size: 16px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.unit-toggle label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.unit-toggle input[type="checkbox"] {
-  transform: scale(1.2);
-  /* make checkbox easier to tap */
 }
