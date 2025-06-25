@@ -2,14 +2,15 @@ const apiKey = "08a08fe2089f9f3f9384af301e350c94";
 
 let unit = localStorage.getItem("unit") || "metric";
 const unitSwitch = document.getElementById("unitSwitch");
-
-// Theme setup
 const toggleBtn = document.getElementById("themeToggle");
+const rotateIcon = document.getElementById("rotateIcon");
+
 window.onload = () => {
   const theme = localStorage.getItem("theme");
   if (theme === "dark") {
     document.body.classList.add("dark-mode");
-    toggleBtn.textContent = "☀️ Toggle Light Mode";
+    rotateIcon.textContent = "☀️";
+    toggleBtn.lastChild.textContent = " Toggle Light Mode";
   }
 
   unitSwitch.checked = unit === "imperial";
@@ -21,15 +22,21 @@ window.onload = () => {
   }
 };
 
-// Theme toggle
 toggleBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   const isDark = document.body.classList.contains("dark-mode");
-  toggleBtn.textContent = isDark ? "☀️ Toggle Light Mode" : "🌙 Toggle Dark Mode";
+
+  // Update only emoji and text without overwriting entire button
+  rotateIcon.textContent = isDark ? "☀️" : "🌙";
+  toggleBtn.lastChild.textContent = isDark ? " Toggle Light Mode" : " Toggle Dark Mode";
+
   localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  // Animate the emoji icon
+  rotateIcon.classList.add("animate-flipBounce");
+  setTimeout(() => rotateIcon.classList.remove("animate-flipBounce"), 600);
 });
 
-// Unit toggle
 unitSwitch.addEventListener("change", () => {
   unit = unitSwitch.checked ? "imperial" : "metric";
   localStorage.setItem("unit", unit);
@@ -41,7 +48,6 @@ unitSwitch.addEventListener("change", () => {
   }
 });
 
-// Get weather by city
 async function getWeather() {
   const city = document.getElementById("cityInput").value.trim();
   if (!city) return;
@@ -64,7 +70,6 @@ async function getWeather() {
   }
 }
 
-// Get weather by geolocation
 async function getWeatherByLocation() {
   if (!navigator.geolocation) {
     alert("Geolocation is not supported.");
@@ -92,12 +97,11 @@ async function getWeatherByLocation() {
       console.error("Geolocation fetch failed:", error);
       document.getElementById("weatherResult").innerText = "Error getting location weather.";
     }
-  }, (err) => {
+  }, () => {
     alert("Location permission denied.");
   });
 }
 
-// Show weather and animate
 function showWeather(data) {
   const iconCode = data.weather[0].icon;
   const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
@@ -114,12 +118,39 @@ function showWeather(data) {
   const weatherDiv = document.getElementById("weatherResult");
   weatherDiv.innerHTML = result;
 
-  // Animate weather result
   weatherDiv.classList.remove("visible");
-  void weatherDiv.offsetWidth; // trigger reflow
+  void weatherDiv.offsetWidth;
   weatherDiv.classList.add("visible");
 
-  // Animate icon
   const iconImg = document.getElementById("weatherIcon");
   iconImg.onload = () => iconImg.classList.add("loaded");
+
+  function showRain() {
+  const rainContainer = document.querySelector(".rain");
+  rainContainer.innerHTML = ""; // clear previous drops
+
+  const dropCount = 100;
+
+  for (let i = 0; i < dropCount; i++) {
+    const drop = document.createElement("div");
+    drop.className = "rain-drop";
+
+    const delay = Math.random() * 2; // seconds
+    const duration = 1 + Math.random() * 1.5; // seconds
+    const left = Math.random() * 100; // percent
+
+    drop.style.left = `${left}%`;
+    drop.style.animationDelay = `${delay}s`;
+    drop.style.animationDuration = `${duration}s`;
+
+    rainContainer.appendChild(drop);
+  }
+}
+
+if (data.weather[0].main.toLowerCase().includes("rain")) {
+  showRain();
+} else {
+  document.querySelector(".rain").innerHTML = "";
+}
+
 }
