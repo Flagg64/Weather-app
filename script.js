@@ -1,4 +1,4 @@
-const apiKey = "YOUR_API_KEY";
+const apiKey = "08a08fe2089f9f3f9384af301e350c94";
 
 let unit = localStorage.getItem("unit") || "metric";
 const unitSwitch = document.getElementById("unitSwitch");
