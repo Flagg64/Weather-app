@@ -5,11 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather App</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 </head>
 <body>
+  <!-- Weather Background Effects -->
+  <div class="weather-effect" id="cloudEffect"></div>
+  <div class="weather-effect" id="rainEffect"></div>
+  <div class="weather-effect" id="lightningEffect"></div>
+<div class="weather-effect" id="snowEffect"></div>
+<div class="weather-effect" id="sunnyEffect"></div>
   <div class="app">
-    <div class="rain"></div>
-    <h1>🌤 Weather App</h1>
+    
+    <h1>🌤 What's the Weather?</h1>
 
     <input type="text" id="cityInput" placeholder="Enter a city" />
 
@@ -28,6 +35,23 @@
 
 
     <div id="weatherResult"></div>
+
+    <div class="radar-container">
+  <h2>🌦 Doppler Radar</h2>
+  <div class="radar-frame-wrapper">
+    <iframe
+      id="radarFrame"
+      width="100%"
+      height="300"
+      frameborder="0"
+      allowfullscreen
+      src=""
+    ></iframe>
+  <div id="overlayButtons">
+  <button onclick="setOverlay('rain')">Rain</button>
+  <button onclick="setOverlay('clouds')">Clouds</button>
+  <button onclick="setOverlay('temp')">Temperature</button>
+  <button onclick="setOverlay('wind')">Wind</button>
   </div>
 
   <script src="script.js"></script>
